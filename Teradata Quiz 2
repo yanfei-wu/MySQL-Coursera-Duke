@@ -1,0 +1,111 @@
+## 2. On what day was Dillard’s income based on total sum of purchases the greatest?
+
+SELECT saledate, SUM(amt)
+FROM trnsact
+WHERE stype = 'P'
+GROUP BY saledate
+ORDER BY SUM(amt) DESC;
+# 04/12/18
+
+## 3. What is the deptdesc of the departments that have the top 3 greatest numbers of skus from the skuinfo table associated with them?
+
+SELECT TOP 3 d.deptdesc, COUNT(s.sku)
+FROM skuinfo s LEFT JOIN deptinfo d
+ON s.dept = d.dept
+GROUP BY d.deptdesc
+ORDER BY COUNT(s.sku) DESC;
+# INVEST 150815
+# POLOMEN 142108
+# BRIOSO 131106
+
+## 5. How many skus are in the skstinfo table, but NOT in the skuinfo table?
+
+SELECT skstinfo.sku
+FROM skstinfo LEFT JOIN skuinfo
+ON skstinfo.sku = skuinfo.sku
+WHERE skuinfo.sku IS NULL
+GROUP BY skstinfo.sku; 
+# 0
+
+## 6. What is the average amount of profit Dillard’s made per day?
+
+SELECT SUM(t.amt-s.cost)/COUNT(DISTINCT t.saledate) AS AvgProfit
+FROM trnsact t LEFT JOIN skstinfo s
+ON t.sku = s.sku AND t.store = s.store
+WHERE t.stype = 'P';
+# 1527903
+
+## 7. Using one query to retrieve your answer, how many MSAs are there within the state of North Carolina (abbreviated “NC”), 
+## and within these MSAs, what is the lowest population level (msa_pop) and highest income level (msa_income)?
+
+SELECT state, COUNT(msa), MIN(msa_pop), MAX(msa_income)
+FROM store_msa
+GROUP BY state
+HAVING state = 'NC';
+# 16   339511   36151
+
+## 8. What department (with department description), brand, style, and color brought in the greatest total amount of sales?
+
+SELECT d.dept, d.deptdesc, s.brand, s.style, s.color, SUM(t.amt)
+FROM skuinfo s LEFT JOIN deptinfo d
+ON s.dept = d.dept
+LEFT JOIN trnsact t
+ON s.sku = t.sku
+WHERE t.stype = 'P'
+GROUP BY d.dept, d.deptdesc, s.brand, s.style, s.color
+ORDER BY SUM(t.amt) DESC;
+# 800   CLINIQUE  CLINIQUE  6142  DDML
+
+## 9. How many stores have more than 180,000 distinct skus associated with them in the skstinfo table?
+
+SELECT store, COUNT(DISTINCT sku)
+FROM skstinfo
+GROUP BY store
+HAVING COUNT(DISTINCT sku) > 180000;
+# 12
+
+## 10. What feature(s) differs among all the distinct skus in the “cop” department with the “federal” brand and a “rinse wash” color? 
+
+SELECT s.sku, s.style, s.size, s.vendor, s.packsize
+FROM skuinfo s LEFT JOIN deptinfo d
+ON s.dept = d.dept
+WHERE d.deptdesc = 'cop' AND s.brand = 'federal' AND s.color = 'rinse wash'
+GROUP BY s.sku, s.style, s.size, s.vendor, s.packsize;
+
+## 11. How many skus are in the skuinfo table, but NOT in the skstinfo table?
+
+SELECT skuinfo.sku
+FROM skuinfo LEFT JOIN skstinfo
+ON skuinfo.sku = skstinfo.sku
+WHERE skstinfo.sku IS NULL
+GROUP BY skuinfo.sku;
+# 803966
+
+## 12. In what city and state is the store that had the greatest total sum of sales?
+
+SELECT s.city, s.state, SUM(t.amt)
+FROM store_msa s LEFT JOIN trnsact t
+ON s.store = t.store
+WHERE t.stype = 'P'
+GROUP BY s.city, s.state
+ORDER BY SUM(t.amt) DESC;
+# HOUSTON TX
+
+## 13. How many states have more than 10 Dillards stores in them?
+
+SELECT state, COUNT(DISTINCT store)
+FROM strinfo
+GROUP BY state
+HAVING COUNT(DISTINCT store) > 10;
+# 15
+
+## 14. What is the suggested retail price of all the skus in the “reebok” department with the “skechers” brand and a “wht/saphire” color?
+
+SELECT skst.retail, skst.sku
+FROM skuinfo s LEFT JOIN deptinfo d
+ON s.dept = d.dept
+LEFT JOIN skstinfo skst
+ON s.sku = skst.sku
+WHERE d.deptdesc = 'reebok' AND s.brand = 'skechers' AND s.color = 'wht/saphire'
+GROUP BY skst.retail, skst.sku;
+# 29.00
