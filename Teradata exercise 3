@@ -1,0 +1,62 @@
+## Exercise 1
+## How many distinct dates are there in the saledate column of the transaction
+## table for each month/year combination in the database?
+
+
+
+
+## Exercise 2
+## Use a CASE statement within an aggregate function to determine which sku
+## had the greatest total sales during the combined summer months of June, July, and August.
+
+
+## Exercise 3
+## How many distinct dates are there in the saledate column of the transaction table for each month/year/store 
+## combination in the database? Sort your results by the number of days per combination in ascending order.
+
+
+## Exercise 4
+## What is the average daily revenue for each store/month/year combination in the database? 
+## Calculate this by dividing the total revenue for a group by the number of sales days available 
+## in the transaction table for that group.
+
+
+## Exercise 5
+## What is the average daily revenue brought in by Dillard’s stores in areas of high, medium, or low levels of high school education?
+
+
+## Exercise 6
+## Compare the average daily revenues of the stores with the highest median msa_income and the lowest median msa_income. 
+## In what city and state were these stores, and which store had a higher average daily revenue?
+
+
+## Exercise 7
+## What is the brand of the sku with the greatest standard deviation in sprice? 
+## Only examine skus that have been part of over 100 transactions.
+
+
+
+## Exercise 8
+## Examine all the transactions for the sku with the greatest standard deviation in
+## sprice, but only consider skus that are part of more than 100 transactions.
+
+
+
+## Exercise 9
+## What was the average daily revenue Dillard’s brought in during each month of the year? 
+
+
+## Exercise 10
+## Which department, in which city and state of what store, had the greatest % increase in 
+## average daily sales revenue from November to December?
+
+
+## Exercise 11
+## What is the city and state of the store that had the greatest decrease in average daily revenue from August to September?
+
+
+
+## Exercise 12
+## Determine the month of maximum total revenue for each store. Count the number of stores whose month of maximum total revenue 
+## was in each of the twelve months. Then determine the month of maximum average daily revenue. Count thenumber of stores whose 
+## month of maximum average daily revenue was in each of the twelve months. How do they compare?
